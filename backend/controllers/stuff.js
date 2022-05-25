@@ -11,8 +11,12 @@ exports.createSauce = (req, res, next) => {
     });
     sauce.save()
     .then(() => res.status(201).json({ message: 'Sauce enregistrée !'}))
-    .catch(error => res.status(400).json({ error }));
+    .catch(error =>{console.log(error);     res.status(400).json({error})});
           };
+      
+    //.catch(error => res.status(400).json({ error }));      
+    //.catch(error =>{console.log(error);     res.status(400).json({error})});
+    
 
 exports.modifySauce = (req, res, next) => {
     Sauce.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
