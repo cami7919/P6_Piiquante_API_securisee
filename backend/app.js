@@ -8,7 +8,7 @@ const userRoutes = require ('./routes/user');
 
 const app = express(); 
 
-const path = require('path');
+//const path = require('path');
 
 mongoose.connect('mongodb+srv://cami2610:MongoDB2020@cluster0.aizxs.mongodb.net/test?retryWrites=true&w=majority',
   { useNewUrlParser: true,
@@ -28,7 +28,7 @@ app.use((req, res, next) => {
 
   app.use(bodyParser.json());
 
-app.use('/images', express.static(path.join(__dirname, 'images')));
+//app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.use ('/api/stuff', stuffRoutes);
 app.use('/api/auth', userRoutes);
