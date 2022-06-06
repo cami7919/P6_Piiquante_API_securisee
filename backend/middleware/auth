@@ -1,5 +1,10 @@
 const jwt = require ('jsonwebtoken');
 
+//1. recuperer le token (dans le header Authorization)
+//2.dechiffrer le token, puis en recuperer l'userId
+//3. Verifier que l'userId de la requete existe
+//4. comparer l'userId de la requete avec l'userId  du token :
+
 module.exports = (req, res, next) =>{
     try{
         const token = req.headers.authorization.split(' ')[1];

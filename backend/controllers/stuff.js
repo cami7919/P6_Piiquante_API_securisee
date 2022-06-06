@@ -1,6 +1,6 @@
 
 const req = require('express/lib/request');
-const Sauce = require('../models/Sauce')
+const Sauce = require('../models/Sauce');
 
 
 exports.createSauce = (req, res, next) => {

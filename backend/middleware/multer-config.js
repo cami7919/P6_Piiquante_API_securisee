@@ -1,3 +1,4 @@
+//pour gerer les requetes HTTP avec envoi de fichier
 const multer = require('multer');
 
 const MIME_TYPES = {
