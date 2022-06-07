@@ -1,5 +1,5 @@
 const express = require('express');
-// const bodyParser = require('body-parser');
+
 const mongoose = require ('mongoose');
 
 const stuffRoutes = require ('./routes/stuff');
@@ -36,9 +36,9 @@ app.use((req, res, next) => {
   });
 
 
-//Pour acceder au body de la requete:
+//Pour pouvoir utiliser le body de la requete:
 app.use(express.json());
-// app.use(bodyParser.json());
+
 
 //Protection en configurant les en-tetes HHTP renvoyés par Express
 app.use(helmet());

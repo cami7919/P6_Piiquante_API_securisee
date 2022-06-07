@@ -8,15 +8,14 @@ const cryptojs = require('crypto-js');
 const User = require('../models/User');
 
 const jwt = require('jsonwebtoken');
-const dotenv =require('dotenv');
-const result = dotenv.config();
+require('dotenv').config();
 
 //---------------ROUTE SIGNUP : INSCRIPTION UTILISATEUR --------------------------
 
 exports.signup = (req, res, next) => {
   console.log("afficher la req.body :"+ req.body)
   //chiffre l'email avant de le sauvegarder sur la BDD
-  const emailCryptoJs = cryptojs.HmacSHA256(req.body.email, `${process.env.CRYPTOJS_KEY_EMAIL}`).toString();
+  const emailCryptoJs = cryptojs.HmacSHA256(req.body.email, process.env.CRYPTOJS_KEY_EMAIL).toString();
   //hacher le mdp (salage:10fois) avant de le sauvegarder sur la BDD
   bcrypt.hash(req.body.password, 10)
     .then(hash => {
@@ -43,13 +42,15 @@ exports.login = (req, res, next) => {
   console.log("afficher email du body de la req :"+req.body.email)
   console.log("afficher mdp du body de la req :"+req.body.password)
   //chiffrer l'email de la requete:
-  const emailCryptoJs = cryptojs.HmacSHA256(req.body.email, `${process.env.CRYPTOJS_KEY_EMAIL}`).toString();
+  const emailCryptoJs = cryptojs.HmacSHA256(req.body.email, process.env.CRYPTOJS_KEY_EMAIL).toString();
   //chercher dans la BDD si l'utilisateur est déjà présent:
   User.findOne({ email: emailCryptoJs })
     .then(user => {
       // si l'utilisateur n'est pas present dans la BDD
       if (!user) {
-        return res.status(401).json({ error: 'Utilisateur non trouvé !' });
+        return res.status(401).json({
+           message: 'Utilisateur non trouvé !',
+           error:error  });      
       }
       //bcrypt compare le mdp de la requete et mdp de la BDD:
       bcrypt.compare(req.body.password, user.password)
@@ -63,7 +64,7 @@ exports.login = (req, res, next) => {
             userId: user._id,
             token: jwt.sign(
               { userId: user._id },
-              'RANDOM_TOKEN_SECRET',
+              process.env.RANDOM_TOKEN_SECRET,
               { expiresIn: '24h' }
             )
           });
